@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Forge | Space Research & Construction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #0c0e27;
+            --secondary: #1a1f4d;
+            --accent: #4a3fe0;
+            --accent-glow: #6c61ff;
+            --text: #e0e0ff;
+            --text-dim: #a0a0d0;
+            --success: #00ff9d;
+            --warning: #ffcc00;
+            --error: #ff3860;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(42, 30, 120, 0.4) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(42, 30, 120, 0.4) 0%, transparent 25%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(106, 90, 255, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text);
+            text-shadow: 0 0 15px rgba(106, 90, 255, 0.5);
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Research Section */
+        .research-section {
+            background: rgba(13, 17, 42, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(60, 50, 180, 0.3);
+            border: 1px solid rgba(106, 90, 255, 0.2);
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: rgba(10, 13, 35, 0.7);
+            border: 1px solid var(--accent);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 12px 15px;
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: var(--accent-glow);
+        }
+
+        .research-topics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .topic {
+            background: rgba(20, 25, 60, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(106, 90, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .topic:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(60, 50, 180, 0.4);
+            border-color: var(--accent);
+        }
+
+        .topic h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .topic p {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        /* Construction Section */
+        .construction-section {
+            background: rgba(13, 17, 42, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(60, 50, 180, 0.3);
+            border: 1px solid rgba(106, 90, 255, 0.2);
+        }
+
+        .components {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .component {
+            background: rgba(20, 25, 60, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(106, 90, 255, 0.1);
+        }
+
+        .component:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(60, 50, 180, 0.4);
+            border-color: var(--accent);
+        }
+
+        .component i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .component h3 {
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .construction-area {
+            background: rgba(10, 13, 35, 0.7);
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            min-height: 250px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .construction-area h3 {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+        }
+
+        /* Photo Section */
+        .photo-section {
+            grid-column: 1 / -1;
+            background: rgba(13, 17, 42, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(60, 50, 180, 0.3);
+            border: 1px solid rgba(106, 90, 255, 0.2);
+            margin-top: 30px;
+        }
+
+        .photo-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(20, 25, 60, 0.5);
+            border: 1px solid rgba(106, 90, 255, 0.2);
+            color: var(--text-dim);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .photo-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(106, 90, 255, 0.7);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-assistant i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .ai-chatbot {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(13, 17, 42, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(60, 50, 180, 0.5);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--accent);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chatbot.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header i {
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .voice-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(106, 90, 255, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .voice-btn:hover, .voice-btn.listening {
+            background: var(--accent);
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.ai {
+            background: rgba(76, 60, 220, 0.2);
+            border-left: 3px solid var(--accent);
+            align-self: flex-start;
+        }
+
+        .message.user {
+            background: rgba(30, 40, 100, 0.3);
+            border-right: 3px solid var(--warning);
+            align-self: flex-end;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background: var(--secondary);
+        }
+
+        .chat-input input {
+            flex: 1;
+            background: rgba(10, 13, 35, 0.7);
+            border: 1px solid var(--accent);
+            border-radius: 8px 0 0 8px;
+            padding: 12px 15px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            padding: 0 20px;
+            cursor: pointer;
+        }
+
+        /* Modal for enlarged photo */
+        .photo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+            color: white;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: var(--accent);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-dim);
+            font-size: 14px;
+            border-top: 1px solid rgba(106, 90, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .research-topics, .components {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ai-chatbot {
+                width: 300px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            .research-topics, .components, .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            nav a {
+                font-size: 16px;
+            }
+            
+            .ai-chatbot {
+                width: 85%;
+                right: 7.5%;
+            }
+        }
+
+        /* Sci-fi Elements */
+        .sci-fi-element {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(76, 60, 220, 0.1);
+            filter: blur(60px);
+            z-index: -1;
+        }
+
+        .element-1 {
+            top: 10%;
+            left: 5%;
+        }
+
+        .element-2 {
+            bottom: 15%;
+            right: 5%;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        .pulse {
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        /* Construction Preview */
+        .construction-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            min-height: 180px;
+            align-items: center;
+        }
+
+        .constructed-item {
+            background: rgba(76, 60, 220, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .constructed-item i {
+            color: var(--accent);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--secondary);
+            border-left: 4px solid var(--success);
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Voice status indicator */
+        .voice-status {
+            position: fixed;
+            bottom: 100px;
+            right: 100px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 20px rgba(106, 90, 255, 0.7);
+            z-index: 99;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .voice-status.listening {
+            opacity: 1;
+            transform: scale(1);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .voice-status i {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sci-fi-element element-1"></div>
+    <div class="sci-fi-element element-2"></div>
+    <div class="notification" id="notification">Component added successfully!</div>
+    <div class="voice-status" id="voiceStatus">
+        <i class="fas fa-microphone"></i>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-starship"></i>
+                <span>COSMIC FORGE</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Research</a></li>
+                    <li><a href="#">Construction</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Mission Control</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            <section class="research-section">
+                <h2 class="section-title">Space Research Database</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="researchQuery" placeholder="Search cosmic phenomena, technology, exoplanets...">
+                    <button id="researchButton"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <h3>Popular Research Topics</h3>
+                <div class="research-topics">
+                    <div class="topic" data-topic="dark-matter">
+                        <h3>Dark Matter Analysis</h3>
+                        <p>Study the invisible mass that shapes galaxies</p>
+                    </div>
+                    <div class="topic" data-topic="wormhole">
+                        <h3>Wormhole Physics</h3>
+                        <p>Theoretical frameworks for FTL travel</p>
+                    </div>
+                    <div class="topic" data-topic="exoplanet">
+                        <h3>Exoplanet Atmospheres</h3>
+                        <p>Analyze potential habitable worlds</p>
+                    </div>
+                    <div class="topic" data-topic="quantum">
+                        <h3>Quantum Entanglement Comms</h3>
+                        <p>Instantaneous communication across space</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="construction-section">
+                <h2 class="section-title">Space Construction Lab</h2>
+                
+                <h3>Available Components</h3>
+                <div class="components">
+                    <div class="component" data-component="particle-accelerator">
+                        <i class="fas fa-atom"></i>
+                        <h3>Particle Accelerator</h3>
+                    </div>
+                    <div class="component" data-component="comm-array">
+                        <i class="fas fa-satellite"></i>
+                        <h3>Comm Array</h3>
+                    </div>
+                    <div class="component" data-component="solar-collector">
+                        <i class="fas fa-solar-panel"></i>
+                        <h3>Solar Collector</h3>
+                    </div>
+                    <div class="component" data-component="plasma-conduit">
+                        <i class="fas fa-radiation"></i>
+                        <h3>Plasma Conduit</h3>
+                    </div>
+                    <div class="component" data-component="quantum-sensor">
+                        <i class="fas fa-microscope"></i>
+                        <h3>Quantum Sensor</h3>
+                    </div>
+                    <div class="component" data-component="habitat-ring">
+                        <i class="fas fa-ring"></i>
+                        <h3>Habitat Ring</h3>
+                    </div>
+                </div>
+                
+                <div class="construction-area">
+                    <h3>Construction Blueprint</h3>
+                    <div class="construction-preview" id="constructionPreview">
+                        <p class="pulse">Drag components here to build</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Photo Section -->
+            <section class="photo-section">
+                <h2 class="section-title">Cosmic Gallery</h2>
+                
+                <div class="photo-filters">
+                    <button class="filter-btn active" data-filter="all">All Images</button>
+                    <button class="filter-btn" data-filter="nebula">Nebulas</button>
+                    <button class="filter-btn" data-filter="galaxy">Galaxies</button>
+                    <button class="filter-btn" data-filter="technology">Space Tech</button>
+                    <button class="filter-btn" data-filter="planet">Planets</button>
+                </div>
+                
+                <div class="photo-gallery">
+                    <div class="photo-item" data-category="nebula">
+                        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Orion Nebula">
+                        <div class="photo-overlay">
+                            <div class="photo-title">Orion Nebula</div>
+                            <div class="photo-desc">Star-forming region 1,344 light-years away</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" data-category="galaxy">
+                        <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Andromeda Galaxy">
+                        <div class="photo-overlay">
+                            <div class="photo-title">Andromeda Galaxy</div>
+                            <div class="photo-desc">Our closest galactic neighbor</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" data-category="technology">
+                        <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Space Station">
+                        <div class="photo-overlay">
+                            <div class="photo-title">International Space Station</div>
+                            <div class="photo-desc">Orbiting laboratory 408 km above Earth</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" data-category="planet">
+                        <img src="https://images.unsplash.com/photo-1454789476662-53eb23ba5907?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Saturn">
+                        <div class="photo-overlay">
+                            <div class="photo-title">Saturn</div>
+                            <div class="photo-desc">The gas giant with spectacular rings</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" data-category="nebula">
+                        <img src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Helix Nebula">
+                        <div class="photo-overlay">
+                            <div class="photo-title">Helix Nebula</div>
+                            <div class="photo-desc">Planetary nebula in Aquarius constellation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" data-category="technology">
+                        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Space Telescope">
+                        <div class="photo-overlay">
+                            <div class="photo-title">James Webb Space Telescope</div>
+                            <div class="photo-desc">Infrared observatory launched in 2021</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Cosmic Forge Research & Development Division | Classified Security Clearance Required</p>
+            <p>© 2150 United Earth Space Agency</p>
+        </footer>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <div class="modal-content">
+            <div class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <img id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant -->
+    <div class="ai-assistant" id="aiAssistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="ai-chatbot" id="aiChatbot">
+        <div class="chat-header">
+            <h3>
+                <i class="fas fa-robot"></i>
+                Cosmic Assistant
+            </h3>
+            <div class="voice-controls">
+                <div class="voice-btn" id="voiceInputBtn">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <div class="voice-btn" id="voiceOutputBtn">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+                Hello! I'm your cosmic assistant. How can I help with your space research and construction today?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask about space technology...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const aiAssistant = document.getElementById('aiAssistant');
+        const aiChatbot = document.getElementById('aiChatbot');
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const researchButton = document.getElementById('researchButton');
+        const researchQuery = document.getElementById('researchQuery');
+        const notification = document.getElementById('notification');
+        const constructionPreview = document.getElementById('constructionPreview');
+        const photoModal = document.getElementById('photoModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const closeModal = document.getElementById('closeModal');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const photoItems = document.querySelectorAll('.photo-item');
+        const voiceInputBtn = document.getElementById('voiceInputBtn');
+        const voiceOutputBtn = document.getElementById('voiceOutputBtn');
+        const voiceStatus = document.getElementById('voiceStatus');
+        
+        // Components data
+        const components = document.querySelectorAll('.component');
+        const topics = document.querySelectorAll('.topic');
+        
+        // Speech recognition setup
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+        let isListening = false;
+        
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            
+            recognition.onstart = function() {
+                isListening = true;
+                voiceInputBtn.classList.add('listening');
+                voiceStatus.classList.add('listening');
+            };
+            
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                userInput.value = speechResult;
+                sendUserMessage();
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event.error);
+                isListening = false;
+                voiceInputBtn.classList.remove('listening');
+                voiceStatus.classList.remove('listening');
+                addMessage("I didn't quite catch that. Could you please try again?", 'ai');
+            };
+            
+            recognition.onend = function() {
+                isListening = false;
+                voiceInputBtn.classList.remove('listening');
+                voiceStatus.classList.remove('listening');
+            };
+        } else {
+            // Browser doesn't support speech recognition
+            voiceInputBtn.style.display = 'none';
+            addMessage("Your browser doesn't support voice input. Please use text input instead.", 'ai');
+        }
+        
+        // Speech synthesis setup
+        const synth = window.speechSynthesis;
+        let isSpeaking = false;
+        
+        function speakText(text) {
+            if (isSpeaking) {
+                synth.cancel();
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.2;
+            utterance.volume = 0.8;
+            
+            utterance.onstart = function() {
+                isSpeaking = true;
+                voiceOutputBtn.classList.add('listening');
+            };
+            
+            utterance.onend = function() {
+                isSpeaking = false;
+                voiceOutputBtn.classList.remove('listening');
+            };
+            
+            synth.speak(utterance);
+        }
+        
+        // Voice input button
+        voiceInputBtn.addEventListener('click', () => {
+            if (!SpeechRecognition) return;
+            
+            if (isListening) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (err) {
+                    console.error('Speech recognition start failed:', err);
+                    addMessage("I'm having trouble with the microphone. Please check your permissions.", 'ai');
+                }
+            }
+        });
+        
+        // Voice output button
+        voiceOutputBtn.addEventListener('click', () => {
+            if (isSpeaking) {
+                synth.cancel();
+            } else {
+                // Read the last AI message
+                const aiMessages = document.querySelectorAll('.message.ai');
+                if (aiMessages.length > 0) {
+                    const lastMessage = aiMessages[aiMessages.length - 1].textContent;
+                    speakText(lastMessage);
+                }
+            }
+        });
+        
+        // AI Assistant functionality
+        aiAssistant.addEventListener('click', () => {
+            aiChatbot.classList.toggle('active');
+        });
+        
+        // Send message function
+        function sendUserMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                // Add user message
+                addMessage(message, 'user');
+                
+                // Process and respond (simulated AI)
+                setTimeout(() => {
+                    generateAIResponse(message);
+                }, 1000);
+                
+                // Clear input
+                userInput.value = '';
+            }
+        }
+        
+        // Send message on button click
+        sendMessage.addEventListener('click', sendUserMessage);
+        
+        // Send message on Enter key
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+        
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Generate AI response
+        function generateAIResponse(userMessage) {
+            let response = "";
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes("research") || lowerMessage.includes("study")) {
+                response = "Our research database contains information on various space phenomena. You can search for specific topics or explore popular research categories.";
+            } else if (lowerMessage.includes("construct") || lowerMessage.includes("build")) {
+                response = "The construction lab allows you to build space equipment by dragging components to the blueprint area. Each component has specific functions in space operations.";
+            } else if (lowerMessage.includes("particle")) {
+                response = "Particle accelerators are used in space stations to study cosmic rays and fundamental particles. They require significant power but provide valuable data.";
+            } else if (lowerMessage.includes("communication") || lowerMessage.includes("comm")) {
+                response = "Space communication arrays use quantum entanglement for instantaneous data transfer across vast distances, essential for deep space missions.";
+            } else if (lowerMessage.includes("solar")) {
+                response = "Solar collectors harness energy from stars. Advanced models can achieve 95% efficiency and power entire space stations.";
+            } else if (lowerMessage.includes("photo") || lowerMessage.includes("image") || lowerMessage.includes("gallery")) {
+                response = "The cosmic gallery contains stunning images of space phenomena and technology. You can filter by category to find specific types of images.";
+            } else if (lowerMessage.includes("help")) {
+                response = "I can help you with: 1) Researching space topics 2) Building space equipment 3) Browsing space images 4) Answering questions about space technology. What would you like to know?";
+            } else {
+                response = "That's an interesting question about space technology. Our records indicate that research is ongoing in this area. Would you like to search our database for more specific information?";
+            }
+            
+            addMessage(response, 'ai');
+        }
+        
+        // Research functionality
+        researchButton.addEventListener('click', performResearch);
+        
+        function performResearch() {
+            const query = researchQuery.value.trim();
+            if (query) {
+                showNotification(`Searching database for: ${query}`);
+                // Simulate research results
+                setTimeout(() => {
+                    addMessage(`I found several research papers about "${query}" in our database. Would you like me to summarize the key findings?`, 'ai');
+                    aiChatbot.classList.add('active');
+                }, 1500);
+            }
+        }
+        
+        // Topic click functionality
+        topics.forEach(topic => {
+            topic.addEventListener('click', () => {
+                const topicName = topic.querySelector('h3').textContent;
+                showNotification(`Accessing research: ${topicName}`);
+                
+                // Simulate research results
+                setTimeout(() => {
+                    addMessage(`The ${topicName} research section contains advanced studies and data. Would you like me to guide you through the key concepts?`, 'ai');
+                    aiChatbot.classList.add('active');
+                }, 1500);
+            });
+        });
+        
+        // Component drag and drop functionality
+        components.forEach(component => {
+            component.addEventListener('click', () => {
+                const componentName = component.querySelector('h3').textContent;
+                const componentType = component.getAttribute('data-component');
+                
+                // Add to construction preview
+                const constructedItem = document.createElement('div');
+                constructedItem.classList.add('constructed-item');
+                constructedItem.innerHTML = `
+                    <i class="${component.querySelector('i').className}"></i>
+                    <span>${componentName}</span>
+                `;
+                
+                // Clear initial message if it exists
+                if (constructionPreview.querySelector('.pulse')) {
+                    constructionPreview.innerHTML = '';
+                }
+                
+                constructionPreview.appendChild(constructedItem);
+                
+                showNotification(`${componentName} added to blueprint`);
+                
+                // Ask AI for construction advice
+                setTimeout(() => {
+                    addMessage(`I see you're adding a ${componentName} to your blueprint. This component works best when paired with a power source and communication system.`, 'ai');
+                    aiChatbot.classList.add('active');
+                }, 1500);
+            });
+        });
+        
+        // Photo gallery functionality
+        photoItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('.photo-title').textContent;
+                const desc = item.querySelector('.photo-desc').textContent;
+                
+                modalImage.src = img.src;
+                modalImage.alt = img.alt;
+                modalTitle.textContent = title;
+                modalDesc.textContent = desc;
+                
+                photoModal.classList.add('active');
+            });
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            photoModal.classList.remove('active');
+        });
+        
+        // Filter functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                // Filter photos
+                photoItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initial AI message with tips
+        setTimeout(() => {
+            addMessage("Pro tip: You can click on any research topic, construction component, or space image to get more information about it. You can also use the microphone button to talk to me!", 'ai');
+        }, 3000);
+    </script>
+</body>
+</html>
